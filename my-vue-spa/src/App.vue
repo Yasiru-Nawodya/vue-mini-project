@@ -7,10 +7,14 @@ interface Product {
   title: string
   price: number
   thumbnail: string
+  category: string   // catogray interface
 }
 
 const products = ref<Product[]>([])
 const searchQuery = ref('')
+
+// selected catogray interface
+const selectedCategory = ref('all') 
 
 onMounted(async () => {
   const res = await fetch('https://dummyjson.com/products')
@@ -18,11 +22,27 @@ onMounted(async () => {
   products.value = data.products
 })
 
-// Computed filtered products based on search
+// Computed unique categories for filtering
+
+const categories = computed(() => {
+  const all = products.value.map(p => p.category)
+  return ['all', ...new Set(all)]
+})
+
+// Computed filtered products based on search and category
+
 const filteredProducts = computed(() =>
-  products.value.filter(product =>
-    product.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
+  products.value.filter(product => {
+    const matchSearch = product.title
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase())
+
+    const matchCategory =
+      selectedCategory.value === 'all' ||
+      product.category === selectedCategory.value
+
+    return matchSearch && matchCategory
+  })
 )
 </script>
 
@@ -39,6 +59,20 @@ const filteredProducts = computed(() =>
         class="search-input"
       />
     </div>
+    
+
+    <!-- Category Filter Buttons -->
+
+    <div class="category-container">
+  <button
+    v-for="cat in categories"
+    :key="cat"
+    @click="selectedCategory = cat"
+    :class="['category-btn', selectedCategory === cat ? 'active' : '']"
+  >
+    {{ cat }}
+  </button>
+</div>
 
     <!-- Product Grid -->
     <div class="product-grid">
@@ -145,4 +179,33 @@ const filteredProducts = computed(() =>
   font-weight: bold;
   margin-bottom: 1rem;
 }
+
+
+.category-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.category-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.category-btn:hover {
+  background: #f0f0f0;
+}
+
+.category-btn.active {
+  background: #333;
+  color: white;
+  border-color: #333;
+}
+
 </style>
