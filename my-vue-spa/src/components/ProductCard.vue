@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { Product } from '../types/product'
 
+
+const emit = defineEmits(['select'])
+
 defineProps<{ product: Product }>()
 </script>
 
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="emit('select')">
     <img :src="product.thumbnail" alt="" class="product-image"/>
     <h2 class="product-title">{{ product.title }}</h2>
     <p class="product-price">${{ product.price }}</p>

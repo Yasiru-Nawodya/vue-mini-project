@@ -16,6 +16,9 @@ const searchQuery = ref('')
 // selected catogray interface
 const selectedCategory = ref('all') 
 
+// For future use if we want to show product details
+const selectedProduct = ref<Product | null>(null)
+
 onMounted(async () => {
   const res = await fetch('https://dummyjson.com/products')
   const data = await res.json()
@@ -77,11 +80,15 @@ const filteredProducts = computed(() =>
     <!-- Product Grid -->
     <div class="product-grid">
       <ProductCard
-        v-for="product in filteredProducts"
+       v-for="product in filteredProducts"
         :key="product.id"
         :product="product"
+        @select="selectedProduct = product"
       />
     </div>
+
+    <pre>{{ selectedProduct }}</pre>
+    
   </div>
 </template>
 
