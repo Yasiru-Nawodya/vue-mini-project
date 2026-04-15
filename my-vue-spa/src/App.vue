@@ -12,7 +12,25 @@ interface Product {
 }
 
 /*   Add cart     */
-const cart = ref<Product[]>([])
+const cart = ref<{ product: Product; qty: number }[]>([])
+
+/* add to cart mode */
+
+const addToCart = (product: Product) => {
+  const existing = cart.value.find(item => item.product.id === product.id)
+
+  if (existing) {
+    existing.qty++
+  } else {
+    cart.value.push({ product, qty: 1 })
+  }
+}
+
+/*remove function*/
+
+const removeFromCart = (id: number) => {
+  cart.value = cart.value.filter(item => item.product.id !== id)
+}
 
 const products = ref<Product[]>([])
 const searchQuery = ref('')
@@ -58,6 +76,19 @@ const filteredProducts = computed(() =>
   <div class="cart-info">
   🛒 Cart: {{ cart.length }}
   </div>
+
+
+
+  <div class="cart-box" v-if="cart.length > 0">
+  <h3>Cart Items</h3>
+
+  <div v-for="item in cart" :key="item.product.id" class="cart-item">
+    <span>{{ item.product.title }}</span>
+    <span>x{{ item.qty }}</span>
+
+    <button @click="removeFromCart(item.product.id)">❌</button>
+  </div>
+</div>
 
   <div class="app">
     <h1 class="title">Our Products</h1>
@@ -114,7 +145,7 @@ const filteredProducts = computed(() =>
       Close
     </button>
 
-    <button class="add-cart-btn" @click="cart.push(selectedProduct!)">
+    <button class="add-cart-btn" @click="addToCart(selectedProduct!)">
         Add to Cart 🛒
     </button>
 
@@ -128,6 +159,32 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+/*card box styles*/ 
+
+.cart-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  align-items: center;
+}
+
+.cart-item button {
+  border: none;
+  background: red;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
 
 /* Cart Info */
 
