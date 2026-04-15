@@ -11,6 +11,9 @@ interface Product {
   
 }
 
+/*   Add cart     */
+const cart = ref<Product[]>([])
+
 const products = ref<Product[]>([])
 const searchQuery = ref('')
 
@@ -51,6 +54,11 @@ const filteredProducts = computed(() =>
 </script>
 
 <template>
+
+  <div class="cart-info">
+  🛒 Cart: {{ cart.length }}
+  </div>
+
   <div class="app">
     <h1 class="title">Our Products</h1>
 
@@ -105,6 +113,13 @@ const filteredProducts = computed(() =>
     <button class="close-btn" @click="selectedProduct = null">
       Close
     </button>
+
+    <button class="add-cart-btn" @click="cart.push(selectedProduct!)">
+        Add to Cart 🛒
+    </button>
+
+
+
   </div>
 </div>
 
@@ -113,6 +128,33 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+
+/* Cart Info */
+
+.cart-info {
+  text-align: right;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+
+/*cart button*/ 
+
+.add-cart-btn {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border: none;
+  background: #00a86b;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-cart-btn:hover {
+  background: #008f5a;
+}
+
 
 /* Modal Category pargraph */
 .modal-category {
