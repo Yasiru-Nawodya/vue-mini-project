@@ -87,8 +87,23 @@ const filteredProducts = computed(() =>
       />
     </div>
 
-    <pre>{{ selectedProduct }}</pre>
-    
+    <!-- Product Details -->
+    <!-- <pre>{{ selectedProduct }}</pre> -->
+    <!-- Product Detail Modal -->
+<div v-if="selectedProduct" class="modal-overlay" @click="selectedProduct = null">
+  <div class="modal" @click.stop>
+    <img :src="selectedProduct.thumbnail" class="modal-image" />
+
+    <h2>{{ selectedProduct.title }}</h2>
+    <p class="modal-price">${{ selectedProduct.price }}</p>
+
+    <button class="close-btn" @click="selectedProduct = null">
+      Close
+    </button>
+  </div>
+</div>
+
+
   </div>
 </template>
 
@@ -214,5 +229,61 @@ const filteredProducts = computed(() =>
   color: white;
   border-color: #333;
 }
+
+/* Overlay background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal box */
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Image */
+.modal-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Price */
+.modal-price {
+  color: #00a86b;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+/* Close button */
+.close-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #333;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 </style>
