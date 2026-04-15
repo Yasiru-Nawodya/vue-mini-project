@@ -83,12 +83,21 @@ const filteredProducts = computed(() =>
   <h3>Cart Items</h3>
 
   <div v-for="item in cart" :key="item.product.id" class="cart-item">
-    <span>{{ item.product.title }}</span>
-    <span>x{{ item.qty }}</span>
+    {{ item.product.title }}
+    x{{ item.qty }}
 
     <button @click="removeFromCart(item.product.id)">❌</button>
   </div>
 </div>
+
+<!-- Total price calculation -->
+
+<p class="total">
+  Total: $
+  {{
+    cart.reduce((sum, item) => sum + item.product.price * item.qty, 0)
+  }}
+</p>
 
   <div class="app">
     <h1 class="title">Our Products</h1>
@@ -159,6 +168,11 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+.total {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
 /*card box styles*/ 
 
 .cart-box {
