@@ -8,6 +8,7 @@ defineProps<{ product: Product }>()
 </script>
 
 <template>
+ 
   <div class="product-card" @click="emit('select')">
     <img :src="product.thumbnail" alt="" class="product-image"/>
     <h2 class="product-title">{{ product.title }}</h2>
@@ -16,26 +17,37 @@ defineProps<{ product: Product }>()
 </template>
 
 <style>
+
+.product-category {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+
 .product-card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
   background: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
-.product-image {
+.product-card img {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.08);
 }
 
 .product-title {
@@ -45,8 +57,9 @@ defineProps<{ product: Product }>()
 }
 
 .product-price {
-  font-size: 1rem;
-  color: #2f855a;
-  font-weight: 600;
+  font-size: 1.2rem;
+  color: #00a86b;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 </style>

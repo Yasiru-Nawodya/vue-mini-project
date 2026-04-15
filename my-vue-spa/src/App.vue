@@ -8,6 +8,7 @@ interface Product {
   price: number
   thumbnail: string
   category: string   // catogray interface
+  
 }
 
 const products = ref<Product[]>([])
@@ -97,6 +98,10 @@ const filteredProducts = computed(() =>
     <h2>{{ selectedProduct.title }}</h2>
     <p class="modal-price">${{ selectedProduct.price }}</p>
 
+    <p class="modal-category">
+     Category: {{ selectedProduct.category }}
+    </p>
+
     <button class="close-btn" @click="selectedProduct = null">
       Close
     </button>
@@ -108,6 +113,14 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+
+/* Modal Category pargraph */
+.modal-category {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
 /* Container */
 .app {
   max-width: 1200px;
@@ -247,10 +260,10 @@ const filteredProducts = computed(() =>
 .modal {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
-  width: 300px;
+  border-radius: 16px;
+  width: 320px;
   text-align: center;
-  animation: fadeIn 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 /* Image */
