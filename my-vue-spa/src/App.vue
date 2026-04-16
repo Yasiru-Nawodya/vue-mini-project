@@ -11,6 +11,10 @@ interface Product {
   
 }
 
+/* Cart visibility state */           
+
+const showCart = ref(false)
+
 /*   Add cart     */
 const cart = ref<{ product: Product; qty: number }[]>([])
 
@@ -73,13 +77,12 @@ const filteredProducts = computed(() =>
 
 <template>
 
-  <div class="cart-info">
+<div class="cart-info" @click="showCart = !showCart">
   🛒 Cart: {{ cart.length }}
-  </div>
+</div>
 
 
-
-  <div class="cart-box" v-if="cart.length > 0">
+  <div class="cart-box" v-if="showCart && cart.length > 0">
   <h3>Cart Items</h3>
 
   <div v-for="item in cart" :key="item.product.id" class="cart-item">
@@ -202,10 +205,12 @@ const filteredProducts = computed(() =>
 
 /* Cart Info */
 
+
 .cart-info {
   text-align: right;
   margin-bottom: 1rem;
   font-weight: bold;
+  cursor: pointer;
 }
 
 
