@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import ProductCard from './components/ProductCard.vue'
+
 
 interface Product {
   id: number
@@ -16,7 +17,10 @@ interface Product {
 const showCart = ref(false)
 
 /*   Add cart     */
-const cart = ref<{ product: Product; qty: number }[]>([])
+
+const cart = ref<{ product: Product; qty: number }[]>(
+  JSON.parse(localStorage.getItem('cart') || '[]')
+)
 
 /* add to cart mode */
 
@@ -29,6 +33,12 @@ const addToCart = (product: Product) => {
     cart.value.push({ product, qty: 1 })
   }
 }
+
+/* Persist cart to localStorage */
+
+watch(cart, (newCart) => {
+  localStorage.setItem('cart', JSON.stringify(newCart))
+}, { deep: true })
 
 /*remove function*/
 
