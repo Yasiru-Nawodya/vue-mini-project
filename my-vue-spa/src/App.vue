@@ -149,6 +149,10 @@ const filteredProducts = computed(() =>
       />
     </div>
 
+    <p v-if="filteredProducts.length === 0" class="empty">
+  No products found 😢
+</p>
+
     <!-- Product Details -->
     <!-- <pre>{{ selectedProduct }}</pre> -->
     <!-- Product Detail Modal -->
@@ -181,6 +185,16 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+
+/* Empty state styling */
+.empty {
+  text-align: center;
+  margin-top: 2rem;
+  color: #888;
+}
+
+
+
 .total {
   margin-top: 1rem;
   font-weight: bold;
@@ -189,11 +203,15 @@ const filteredProducts = computed(() =>
 /*card box styles*/ 
 
 .cart-box {
-  background: #fff;
-  border: 1px solid #ddd;
+  position: absolute;
+  right: 20px;
+  top: 60px;
+  width: 280px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 10px;
+  z-index: 100;
 }
 
 .cart-item {
@@ -243,6 +261,22 @@ const filteredProducts = computed(() =>
 
 
 /* Modal Category pargraph */
+
+.modal {
+  animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .modal-category {
   font-size: 0.9rem;
   color: #666;
