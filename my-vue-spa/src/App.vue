@@ -102,7 +102,11 @@ const filteredProducts = computed(() =>
 )
 </script>
 
+
+  <!-- This is a simple test template to verify Tailwind CSS is working. You can replace this with your actual app content. -->
 <template>
+
+
   <!-- Loading state -->
 
   <p v-if="loading" class="loading">Loading products...</p>
