@@ -11,6 +11,13 @@ interface Product {
   category: string   // catogray interface
   
 }
+
+/* Dark mode state for future use if we want to implement a dark theme */
+
+const darkMode = ref(
+  JSON.parse(localStorage.getItem('darkMode') || 'false')
+)
+
 /* Loading state for future use if we want to show a loading spinner */           
 
 const loading = ref(true)
@@ -42,6 +49,12 @@ const addToCart = (product: Product) => {
 watch(cart, (newCart) => {
   localStorage.setItem('cart', JSON.stringify(newCart))
 }, { deep: true })
+
+
+/* Persist dark mode preference to localStorage */
+watch(darkMode, (val) => {
+  localStorage.setItem('darkMode', JSON.stringify(val))
+})
 
 /*remove function*/
 
@@ -94,6 +107,13 @@ const filteredProducts = computed(() =>
 
   <p v-if="loading" class="loading">Loading products...</p>
 
+<!-- Dark mode toggle button -->
+
+<button class="dark-toggle" @click="darkMode = !darkMode">
+  {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
+</button>
+
+
 <div class="cart-info" @click="showCart = !showCart">
   🛒 Cart: {{ cart.length }}
 </div>
@@ -119,7 +139,7 @@ const filteredProducts = computed(() =>
   }}
 </p>
 
-  <div class="app">
+  <div :class="['app', darkMode ? 'dark' : '']">
     <h1 class="title">Our Products</h1>
 
     <!-- Search Bar -->
@@ -197,6 +217,59 @@ const filteredProducts = computed(() =>
 </template>
 
 <style>
+
+/* DARK MODE */
+.dark {
+  background: #121212;
+  color: #eee;
+}
+
+/* Cards */
+.dark .product-card {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* Modal */
+.dark .modal {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* Cart */
+.dark .cart-box {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* Buttons */
+.dark .category-btn {
+  background: #2a2a2a;
+  color: #ddd;
+}
+
+.dark .category-btn.active {
+  background: #aa3bff;
+  color: white;
+}
+
+/* Input */
+.dark .search-input {
+  background: #1e1e1e;
+  color: white;
+  border: 1px solid #444;
+}
+
+/* Toggle button */
+.dark-toggle {
+  margin-bottom: 1rem;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
 
 /* Footer styling */
 .footer {
