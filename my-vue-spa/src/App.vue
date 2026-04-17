@@ -11,6 +11,9 @@ interface Product {
   category: string   // catogray interface
   
 }
+/* Loading state for future use if we want to show a loading spinner */           
+
+const loading = ref(true)
 
 /* Cart visibility state */           
 
@@ -59,6 +62,7 @@ onMounted(async () => {
   const res = await fetch('https://dummyjson.com/products')
   const data = await res.json()
   products.value = data.products
+  loading.value = false
 })
 
 // Computed unique categories for filtering
@@ -86,6 +90,9 @@ const filteredProducts = computed(() =>
 </script>
 
 <template>
+  <!-- Loading state -->
+
+  <p v-if="loading" class="loading">Loading products...</p>
 
 <div class="cart-info" @click="showCart = !showCart">
   🛒 Cart: {{ cart.length }}
@@ -182,9 +189,30 @@ const filteredProducts = computed(() =>
 
 
   </div>
+
+  <footer class="footer">
+  © 2026 My Store App
+</footer>
+
 </template>
 
 <style>
+
+/* Footer styling */
+.footer {
+  text-align: center;
+  margin-top: 3rem;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Loading state styling */
+.loading {
+  text-align: center;
+  margin-top: 2rem;
+  font-weight: bold;
+}
+
 
 /* Empty state styling */
 .empty {
