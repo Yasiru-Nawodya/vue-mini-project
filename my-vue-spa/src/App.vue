@@ -149,6 +149,8 @@ const filteredProducts = computed(() =>
   Our Products
   </h1>
 
+
+
     <!-- Search Bar -->
     <div class="search-container">
       <input

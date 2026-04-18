@@ -8,14 +8,32 @@ defineProps<{ product: Product }>()
 </script>
 
 <template>
- 
-  <div class="product-card" @click="emit('select')">
-    <img :src="product.thumbnail" alt="" class="product-image"/>
-    <h2 class="product-title">{{ product.title }}</h2>
-    <p class="product-price">${{ product.price }}</p>
+  <div
+    class="bg-white rounded-xl shadow p-4 cursor-pointer transform transition duration-300 hover:-translate-y-2 hover:shadow-xl"
+    @click="emit('select')"
+  >
+
+    <!-- IMAGE -->
+    <div class="overflow-hidden rounded-xl bg-gray-100">
+      <img
+        :src="product.thumbnail"
+        alt=""
+        class="w-full h-48 object-contain transition duration-300 hover:scale-105"
+      />
+    </div>
+
+    <!-- TITLE -->
+    <h2 class="mt-3 text-lg font-semibold">
+      {{ product.title }}
+    </h2>
+
+    <!-- PRICE -->
+    <p class="text-gray-600">
+      ${{ product.price }}
+    </p>
+
   </div>
 </template>
-
 <style>
 
 .product-category {
