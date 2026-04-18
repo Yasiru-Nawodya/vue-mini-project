@@ -3,13 +3,12 @@ import { ref, onMounted, computed, watch } from 'vue'
 import ProductCard from './components/ProductCard.vue'
 
 
-interface Product {
+export interface Product {
   id: number
   title: string
   price: number
   thumbnail: string
-  category: string   // catogray interface
-  
+  category: string
 }
 
 /* Dark mode state for future use if we want to implement a dark theme */
@@ -143,8 +142,12 @@ const filteredProducts = computed(() =>
   }}
 </p>
 
-  <div :class="['app', darkMode ? 'dark' : '']">
-    <h1 class="title">Our Products</h1>
+
+  <div :class="['app', darkMode ? 'dark' : '']" class="min-h-screen bg-gray-50 dark:bg-gray-900 transition">
+
+  <h1 class="text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-red-500">
+  Our Products
+  </h1>
 
     <!-- Search Bar -->
     <div class="search-container">
